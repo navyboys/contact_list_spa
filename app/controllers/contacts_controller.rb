@@ -23,4 +23,19 @@ class ContactsController < ApplicationController
       render json: contact.to_json#(include: :phones)
     end
   end
+
+  def update
+    contact = Contact.find(params[:id])
+    if contact.update_attributes(name: params[:name], email: params[:email])
+      render json: contact.to_json
+    end
+  end
+
+  protected
+
+  def contact_params
+    params.require(:contact).permit(
+      :name, :email
+    )
+  end
 end

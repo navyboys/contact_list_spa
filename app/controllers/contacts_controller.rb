@@ -17,10 +17,8 @@ class ContactsController < ApplicationController
 
   def create
     contact = Contact.new(name: params[:name], email: params[:email])
-    # phone = Phone.new(label: params[:phones][0][:label], number: params[:phones][0][:number])
     if contact.save!
-      # phone.save!
-      render json: contact.to_json#(include: :phones)
+      render json: contact.to_json
     end
   end
 
@@ -29,13 +27,5 @@ class ContactsController < ApplicationController
     if contact.update_attributes(name: params[:name], email: params[:email])
       render json: contact.to_json
     end
-  end
-
-  protected
-
-  def contact_params
-    params.require(:contact).permit(
-      :name, :email
-    )
   end
 end

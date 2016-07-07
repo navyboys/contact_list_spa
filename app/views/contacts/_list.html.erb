@@ -4,9 +4,15 @@
       <tr>
         <th>Name</th>
         <th>Email</th>
-        <th>Phone</th>
         <th></th>
       </tr>
     </tbody>
   </table>
 </div>
+
+<script id="contact-row" type="text/x-handlebars-template">
+  <tr><td>{{data.name}}
+  </td><td>{{data.email}}
+  </td><td><a class="btn-edit btn btn-primary btn-xs">Edit</a>
+  <a class="btn-delete btn btn-danger btn-xs" data-remote="true" data-method="delete" href="/contacts/{{data.id}}">Delete</a></td><tr>
+</script>

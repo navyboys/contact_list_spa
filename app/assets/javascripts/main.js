@@ -12,7 +12,6 @@ $(document).ready(function() {
 
         $('<td>').addClass('name').text(d.name).appendTo($tr);
         $('<td>').addClass('email').text(d.email).appendTo($tr);
-        $('<td>').addClass('phone').text(d.phones[0].number).appendTo($tr);
 
         var editTag = $('<a>').text('Edit')
                               .addClass('btn-edit btn btn-primary btn-xs');
@@ -68,15 +67,7 @@ $(document).ready(function() {
     var data = {
       name: $('#name').val(),
       email: $('#email').val()
-      // phones: {
-      //   label: $('#label').val(),
-      //   number: $('#number').val()
-      // }
     };
-    // data.name = $('#name').val();
-    // data.email = $('#email').val();
-    // data.phones.label = $('#label').val();
-    // data.phones.number = $('#number').val();
 
     $.ajax({
       url: '/contacts',
@@ -85,13 +76,13 @@ $(document).ready(function() {
       data: data,
       success: function(data) {
         console.log(data);
-        $('#list').append('<tr><td>' + data.name +
-                          '</td><td>' + data.email +
-                          '</td><td>' +
-                          // '</td><td>' + data.phones[0].number +
-                          '</td><td><a class="btn-edit btn btn-primary btn-xs">Edit</a> ' +
-                          '<a class="btn-delete btn btn-danger btn-xs" data-remote="true" data-method="delete" href="/contacts/' + data.id + '">Delete</a></td><tr>'
-                         );
+        var context = {data: data};
+        $('#list').append(template(context));
+        // $('#list').append('<tr><td>' + data.name +
+        //                   '</td><td>' + data.email +
+        //                   '</td><td><a class="btn-edit btn btn-primary btn-xs">Edit</a> ' +
+        //                   '<a class="btn-delete btn btn-danger btn-xs" data-remote="true" data-method="delete" href="/contacts/' + data.id + '">Delete</a></td><tr>'
+        //                  );
       }
     });
     // Prevent the form from being submitted.
@@ -103,4 +94,6 @@ $(document).ready(function() {
     $(this).parent().parent().remove();
   });
 
+  var source   = $("#contact-row").html();
+  var template = Handlebars.compile(source);
 });
